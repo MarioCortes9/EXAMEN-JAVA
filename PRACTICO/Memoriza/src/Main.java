@@ -1,108 +1,83 @@
 import java.util.Random;
 import java.util.Scanner;
 
-public class Main {
-    private static int MAX_DIMESION = 4;
-    private static int parejas = 1;
-    private static int[][] tableroParejas = new int[MAX_DIMESION][MAX_DIMESION];
-    private static int[][] tableroTrabajo = new int[MAX_DIMESION][MAX_DIMESION];
+public class Memoriza {
+
     private static Random aleatorio = new Random();
+    private static Scanner leer = new Scanner(System.in);
 
-    public static void main(String[] args) throws InterruptedException {
-        Scanner leer = new Scanner(System.in);
-        inicializarTablero();
+    private static int numParejas = 2;
+    private static int cantidadNum = 8;
 
+    private static final int FILA = 4;
+    private static final int COLUMNA = 4;
 
-        //bucle de juego
-        while (!finJuego()) {
+    private static int[][] tablero = new int[FILA][COLUMNA];
 
-            mostrarTablero(tableroTrabajo);
-
-            //primer numero coordenadas i
-            System.out.println("Introduce las coordenadas del primer numero: ");
-            int num1fila1 = leer.nextInt();
-            int num1columna1 = leer.nextInt();
-
-            //primer numero coordenadas j
-            System.out.println("Introduce las coordenadas del segundo numero:");
-            int num2fila2 = leer.nextInt();
-            int num2columna2 = leer.nextInt();
-
-
-            //para encontrar el par
-            if (tableroParejas[num1fila1][num1columna1] == tableroParejas[num2fila2][num2columna2]) {
-
-                // destapar si coinciden
-                tableroTrabajo[num1fila1][num1columna1] = tableroParejas[num1fila1][num1columna1];
-                tableroTrabajo[num2fila2][num2columna2] = tableroParejas[num2fila2][num2columna2];
-
-                System.out.println("¡Par encontrado!");
-                System.out.println();
-
-            } else {
-
-                // si no lo encontramos
-                System.out.println("No coinciden, intentalo de nuevo.");
-                System.out.println();
-
-                tableroTrabajo[num1fila1][num1columna1] = tableroParejas[num1fila1][num1columna1];
-                tableroTrabajo[num2fila2][num2columna2] = tableroParejas[num2fila2][num2columna2];
-
-                mostrarTablero(tableroTrabajo);
-                System.out.println("");
-                Thread.sleep(5000);
-
-                tableroTrabajo[num1fila1][num1columna1] = 0;
-                tableroTrabajo[num2fila2][num2columna2] = 0;
-            }
-        }
-
-        System.out.println("Has encontrado todas las parejas");
-        leer.close();
-    }
-
-    public static void inicializarTablero () {
-        for (int i = 0; i < MAX_DIMESION; i++) {
-            for (int j = 0; j < MAX_DIMESION; j += 2) {//incremenatr j en 2 para asi conseguir pares
-                tableroParejas[i][j] = parejas;
-                tableroParejas[i][j + 1] = parejas;
-                parejas++;
-            }
-        }
-        // generar aleatorias
-        for (int i = 0; i < MAX_DIMESION; i++) {
-            for (int j = 0; j < MAX_DIMESION; j++) {
-                int nuevoTablero = tableroParejas[i][j];
-                int i1 = aleatorio.nextInt(MAX_DIMESION);
-                int j1 = aleatorio.nextInt(MAX_DIMESION);
-                tableroParejas[i][j] = tableroParejas[i1][j1];
-                nuevoTablero = tableroParejas[i1][j1];
+    private static void rellenarTablero() {
+        for (int i = 0; i < FILA; i++) {
+            for (int j = 0; j < COLUMNA; j++) {
+                tablero[i][j] = 0;
             }
         }
     }
 
-    public static void mostrarTablero ( int[][] tablero){
-
-        for (int i = 0; i < MAX_DIMESION; i++) {
-            for (int j = 0; j < MAX_DIMESION; j++) {
-                if (tablero[i][j] == 0) {
-                    System.out.print("X ");
-                } else {
-                    System.out.print(tablero[i][j] + " ");
-                }
+    private static void imprimeTablero() {
+        for (int i = 0; i < FILA; i++) {
+            for (int j = 0; j < COLUMNA; j++) {
+                System.out.print(tablero[i][j] + " ");
             }
             System.out.println();
         }
     }
 
-    public static boolean finJuego () {
-        for (int i = 0; i < MAX_DIMESION; i++) {
-            for (int j = 0; j < MAX_DIMESION; j++) {
-                if (tableroTrabajo[i][j] == 0) {
-                    return false;
-                }
+    public static void asignarParejas (){
+
+        int filaAleatoria = 0;
+        int columnaAleatoria = 0;
+
+        for (int i = 0; i < cantidadNum; i++){
+            for (int j = 0; j < numParejas; j++){
+
+                do {
+                    filaAleatoria = aleatorio.nextInt(FILA);
+                        columnaAleatoria = aleatorio.nextInt(COLUMNA);
+
+                }while (tablero[filaAleatoria][columnaAleatoria] != 0);
+                tablero[filaAleatoria][columnaAleatoria] = (i+1);
             }
         }
-        return true;
+    }
+
+    public static void main(String[] args) {
+
+        asignarParejas();
+        imprimeTablero();
+
+        System.out.println("Cuantos intentos quieres Probar");
+        int intentos = leer.nextInt();
+
+        do{
+            System.out.println("Dame las Cordenadas X del Primer Numero");
+            int posicionUsuarioFila = leer.nextInt();
+            System.out.println("Dame las Cordenadas Y del Primer Numero");
+            int posicionUsuarioColumna = leer.nextInt();
+
+            System.out.println("Dame las Cordenadas X del Segundo Numero");
+            int posicionUsuarioFila2 = leer.nextInt();
+            System.out.println("Dame las Cordenadas Y del Segundo Numero");
+            int posicionUsuarioColumna2 = leer.nextInt();
+
+            if (tablero[posicionUsuarioFila][posicionUsuarioColumna] == tablero[posicionUsuarioFila2][posicionUsuarioColumna2]){
+                tablero[posicionUsuarioFila][posicionUsuarioColumna] = 0;
+                tablero[posicionUsuarioFila2][posicionUsuarioColumna2] = 0;
+                System.out.println("Has acertado");
+
+            }else{
+                System.out.println("Posiciones incorectas");
+            }
+            imprimeTablero();
+            intentos--;
+        }while (intentos > 0);
     }
 }
