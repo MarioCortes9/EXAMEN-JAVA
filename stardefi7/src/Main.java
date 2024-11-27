@@ -37,6 +37,7 @@ public class Main {
                 matriz[i][j] = ".";
             }
         }
+        matriz[9][9] = "F";
     }
 
     public static void rellenarPersonajes(String matriz[][], String personaje, int numVeces) {
@@ -107,6 +108,13 @@ public class Main {
                     fila = (fila + 1) % MAX_FILAS; // Restaurar posición
                 }
 
+                //FINAL VOLVER
+                else if (matriz[fila][columna].equals("F")) {
+                    System.out.println(personaje + " ha llegado al final y volverá al inicio.");
+                    fila = 0;
+                    columna = 0;
+                }
+
                 //ACTUALIZAR POSICION
 
                 matriz[fila][columna] = personaje;
@@ -130,6 +138,12 @@ public class Main {
                     System.out.println("No se puede pasar, hay un muro");
                     columna = (columna - 1 + MAX_COLUMNAS) % MAX_COLUMNAS; // Restaurar posición
                 }
+                //FINAL VOLVER
+                else if (matriz[fila][columna].equals("F")) {
+                    System.out.println(personaje + " ha llegado al final y volverá al inicio.");
+                    fila = 0;
+                    columna = 0;
+                }
                 matriz[fila][columna] = personaje;
                 break;
             case "S", "s":
@@ -148,6 +162,12 @@ public class Main {
                 } else if (matriz[fila][columna].equals(muro)) {
                     System.out.println("No se puede pasar, hay un muro");
                     fila = (fila - 1 + MAX_FILAS) % MAX_FILAS; // Restaurar posición
+                }
+                //FINAL VOLVER
+                else if (matriz[fila][columna].equals("F")) {
+                    System.out.println(personaje + " ha llegado al final y volverá al inicio.");
+                    fila = 0;
+                    columna = 0;
                 }
                 matriz[fila][columna] = personaje;
                 break;
@@ -168,6 +188,12 @@ public class Main {
                     System.out.println("No se puede pasar, hay un muro");
                     columna = (columna + 1) % MAX_COLUMNAS; // Restaurar posición
                 }
+                //FINAL VOLVER
+                else if (matriz[fila][columna].equals("F")) {
+                    System.out.println(personaje + " ha llegado al final y volverá al inicio.");
+                    fila = 0;
+                    columna = 0;
+                }
                 matriz[fila][columna] = personaje;
                 break;
             case "Q", "q": // Diagonal arriba-izquierda
@@ -184,6 +210,12 @@ public class Main {
                     System.out.println("No se puede pasar, hay un muro");
                     fila = (fila + 1) % MAX_FILAS; // Restaurar posición
                     columna = (columna + 1) % MAX_COLUMNAS;
+                }
+                //FINAL VOLVER
+                else if (matriz[fila][columna].equals("F")) {
+                    System.out.println(personaje + " ha llegado al final y volverá al inicio.");
+                    fila = 0;
+                    columna = 0;
                 }
                 matriz[fila][columna] = personaje; // Actualiza la posición del personaje
                 break;
@@ -203,6 +235,12 @@ public class Main {
                     fila = (fila + 1) % MAX_FILAS;
                     columna = (columna - 1 + MAX_COLUMNAS) % MAX_COLUMNAS;
                 }
+                //FINAL VOLVER
+                else if (matriz[fila][columna].equals("F")) {
+                    System.out.println(personaje + " ha llegado al final y volverá al inicio.");
+                    fila = 0;
+                    columna = 0;
+                }
                 matriz[fila][columna] = personaje;
                 break;
 
@@ -221,6 +259,12 @@ public class Main {
                     fila = (fila - 1 + MAX_FILAS) % MAX_FILAS;
                     columna = (columna + 1) % MAX_COLUMNAS;
                 }
+                //FINAL VOLVER
+                else if (matriz[fila][columna].equals("F")) {
+                    System.out.println(personaje + " ha llegado al final y volverá al inicio.");
+                    fila = 0;
+                    columna = 0;
+                }
                 matriz[fila][columna] = personaje;
                 break;
 
@@ -238,6 +282,12 @@ public class Main {
                     System.out.println("No se puede pasar, hay un muro");
                     fila = (fila - 1 + MAX_FILAS) % MAX_FILAS;
                     columna = (columna - 1 + MAX_COLUMNAS) % MAX_COLUMNAS;
+                }
+                //FINAL VOLVER
+                else if (matriz[fila][columna].equals("F")) {
+                    System.out.println(personaje + " ha llegado al final y volverá al inicio.");
+                    fila = 0;
+                    columna = 0;
                 }
                 matriz[fila][columna] = personaje;
                 break;
@@ -304,6 +354,12 @@ public class Main {
                     return;
                 }
 
+                else if (matriz[fila][columna].equals("F")) {
+                    System.out.println(personaje + " ha llegado al final y volverá al inicio.");
+                    fila = 0;
+                    columna = 0;
+                }
+
                 matriz[fila][columna] = personaje; // Coloca el personaje en la nueva posición
                 break;
 
@@ -357,7 +413,12 @@ public class Main {
         System.out.println();
         printearTablero(matriz2);
 
+        if (vidas1 == 0) {
+            System.out.println("Yoda ha perdido todas sus vidas.");
+        } else if (vidas2 == 0) {
+            System.out.println("Vader ha perdido todas sus vidas.");
+        }
+
 
     }
 }
-
